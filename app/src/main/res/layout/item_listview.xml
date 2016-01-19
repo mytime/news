@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <com.loopj.android.image.SmartImageView
+        android:id="@+id/iv"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="90dp"
+        android:layout_height="70dp"
+        android:layout_centerVertical="true"
+        />
+<!--标题-->
+    <!--android:singleLine="true" 单行显示-->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:text="Android Fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv"
+        android:textSize="18dp"
+        android:singleLine="true"
+        />
+<!--正文-->
+    <!--android:lines="2" 只显示两行-->
+    <TextView
+        android:id="@+id/tvDetail"
+        android:text="本课讲解在 Android 中Fragment的用法，内容包括使用Fragment、Fragment的生命周期、带侧栏的Activity、Tabbed Activity。"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv"
+        android:textSize="13dp"
+        android:layout_below="@+id/tvTitle"
+        android:textColor="@android:color/darker_gray"
+        android:lines="2"
+
+        />
+<!--评论-->
+    <TextView
+        android:id="@+id/tvComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="879898条评论"
+        android:textColor="#FF0000"
+        android:layout_below="@+id/tvDetail"
+       android:layout_alignParentRight="true"
+
+        />
+
+</RelativeLayout>
