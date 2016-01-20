@@ -25,7 +25,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * 新闻客户端
+ * 引用loopj.android.image 包处理网络图片下载
+ */
 public class MainActivity extends AppCompatActivity {
 
     List<News> newsList;
@@ -74,26 +77,54 @@ public class MainActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             News news = newsList.get(position);
-            View v = View.inflate(MainActivity.this, R.layout.item_listview, null);
 
-            //给三个文本框设置内容
-            TextView tvTitle = (TextView) v.findViewById(R.id.tvTitle);
-            tvTitle.setText(news.getTitle());
+            //滑动 缓存convertView
+            View v = null;
+            ViewHolder mHolder;
 
-            TextView tvDetail = (TextView) v.findViewById(R.id.tvDetail);
-            tvDetail.setText(news.getDetail());
+            //如果convertView缓存为空，
+            if(convertView == null){
+                //填充一个convertView对象
+                v = View.inflate(MainActivity.this, R.layout.item_listview, null);
+                //生成一个ViewHolder对象
+                mHolder = new ViewHolder();
 
-            TextView tvComment = (TextView) v.findViewById(R.id.tvComment);
-            tvComment.setText(news.getComment()+"条评论");
+                //把视图对象封装到mHolder中
+                mHolder.tvTitle = (TextView) v.findViewById(R.id.tvTitle);
+                mHolder.tvDetail = (TextView) v.findViewById(R.id.tvDetail);
+                mHolder.tvComment = (TextView) v.findViewById(R.id.tvComment);
+                mHolder.siv = (SmartImageView) v.findViewById(R.id.iv);
 
-            //给新闻图片设置内容 ,item_listview.xml -> ImageView 改成 SmartImageView
-            SmartImageView siv = (SmartImageView) v.findViewById(R.id.iv);
-            siv.setImageUrl(news.getImageUrl());
+                //在把mHolder封装到view.setTag对象中
+                v.setTag(mHolder);
 
+            }else{
+             //如果convertView缓存为空， 把convertView给v，
+                v = convertView;
+                //获取mHolder,mHolder中封装了布局文件的属性
+                mHolder = (ViewHolder) v.getTag();
+            }
 
+            //给ViewHolder属性赋值
+            mHolder.tvTitle.setText(news.getTitle());
+            mHolder.tvDetail.setText(news.getDetail());
+            mHolder.tvComment.setText(news.getComment()+"条评论");
+            //给新闻图片设置内容 ,引用了loopj.android.image
+            // item_listview.xml -> ImageView 改成 SmartImageView
+            mHolder.siv.setImageUrl(news.getImageUrl());
 
             return v;
         }
+
+        //优化v.findViewById部分，
+        class ViewHolder{
+            TextView tvTitle;
+            TextView tvDetail;
+            TextView tvComment;
+            SmartImageView siv;
+        }
+
+
         @Override
         public Object getItem(int position) {
             return null;
